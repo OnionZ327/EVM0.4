@@ -70,7 +70,6 @@ extern "C"
 #define IST_CHROMA                         1 // M8249: apply the IST core to chroma transform
 #define ALF_SHAPE_IMPROVEMENT              1 // M8240: Filter shape improvement for ALF
 #define IBC_OPT_SCC                        1 // M8242: IBC optimization for SCC
-#define Non_Contiguous_Airspace            1
 
 #if DEST
 #define ODEST                              1 // M8043: Optimization Method of Decoder-side Enhanced Secondary Transform
