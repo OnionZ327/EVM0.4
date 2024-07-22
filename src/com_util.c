@@ -5663,9 +5663,33 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
 
     //-------------------  Model based affine MVP  -------------------//
     {
-        int neb_addr[5];
-        int valid_flag[5];
-        int top_left[5];
+#if Non_Contiguous_Airspace
+        int neb_addr[BAMVP_NUM];
+        int valid_flag[BAMVP_NUM];
+        int top_left[BAMVP_NUM];
+
+        neb_addr[0] = scup + pic_width_in_scu * (cu_height_in_scu - 1) - 1; // F
+        neb_addr[1] = scup - pic_width_in_scu + cu_width_in_scu - 1;        // G
+        neb_addr[2] = scup - pic_width_in_scu + cu_width_in_scu;            // C
+        neb_addr[3] = scup - 1;                                             // A
+        neb_addr[4] = scup - pic_width_in_scu - 1;                          // D
+        neb_addr[5] = scup + pic_width_in_scu * (2 * cu_height_in_scu - 1) - 1 - cu_width_in_scu;//Non_LD
+        neb_addr[6] = scup - pic_width_in_scu * (cu_height_in_scu + 1) + 2 * cu_width_in_scu - 1;//Non_RU
+        neb_addr[7] = scup - pic_width_in_scu * (cu_height_in_scu + 1) - cu_width_in_scu - 1;//Non_LU
+
+        valid_flag[0] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[0]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[0]]) && MCU_GET_AFF(map_scu[neb_addr[0]]);
+        valid_flag[1] = y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[1]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[1]]) && MCU_GET_AFF(map_scu[neb_addr[1]]);
+        valid_flag[2] = y_scu > 0 && x_scu + cu_width_in_scu < pic_width_in_scu&& MCU_GET_CODED_FLAG(map_scu[neb_addr[2]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[2]]) && MCU_GET_AFF(map_scu[neb_addr[2]]);
+        valid_flag[3] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[3]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[3]]) && MCU_GET_AFF(map_scu[neb_addr[3]]);
+        valid_flag[4] = x_scu > 0 && y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[4]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[4]]) && MCU_GET_AFF(map_scu[neb_addr[4]]);
+        valid_flag[5] = x_scu > cu_width_in_scu && y_scu < (pic_height_in_scu - cu_height_in_scu) && MCU_GET_CODED_FLAG(map_scu[neb_addr[5]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[5]]) && MCU_GET_AFF(map_scu[neb_addr[5]]);
+        valid_flag[6] = (x_scu + 2 * cu_width_in_scu - 1) < pic_width_in_scu && y_scu < cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[6]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[6]]) && MCU_GET_AFF(map_scu[neb_addr[6]]);
+        valid_flag[7] = x_scu > cu_width_in_scu && y_scu < cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[7]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[7]]) && MCU_GET_AFF(map_scu[neb_addr[7]]);
+
+#else
+        int neb_addr[BAMVP_NUM];
+        int valid_flag[BAMVP_NUM];
+        int top_left[BAMVP_NUM];
 
         neb_addr[0] = scup + pic_width_in_scu * (cu_height_in_scu - 1) - 1; // F
         neb_addr[1] = scup - pic_width_in_scu + cu_width_in_scu - 1;        // G
@@ -5673,13 +5697,14 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         neb_addr[3] = scup - 1;                                             // A
         neb_addr[4] = scup - pic_width_in_scu - 1;                          // D
 
+
         valid_flag[0] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[0]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[0]]) && MCU_GET_AFF(map_scu[neb_addr[0]]);
         valid_flag[1] = y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[1]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[1]]) && MCU_GET_AFF(map_scu[neb_addr[1]]);
         valid_flag[2] = y_scu > 0 && x_scu + cu_width_in_scu < pic_width_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[2]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[2]]) && MCU_GET_AFF(map_scu[neb_addr[2]]);
         valid_flag[3] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[3]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[3]]) && MCU_GET_AFF(map_scu[neb_addr[3]]);
         valid_flag[4] = x_scu > 0 && y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[4]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[4]]) && MCU_GET_AFF(map_scu[neb_addr[4]]);
-
-        for (k = 0; k < 5; k++)
+#endif
+        for (k = 0; k < BAMVP_NUM; k++)
         {
             if (valid_flag[k])
             {
@@ -5702,7 +5727,7 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
             valid_flag[4] = 0;
         }
 
-        for (k = 0; k < 5; k++)
+        for (k = 0; k < BAMVP_NUM; k++)
         {
             if (valid_flag[k])
             {
