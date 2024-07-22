@@ -1,0 +1,5 @@
+C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app/out/build/x64-Debug/CMakeFiles/app_bitstream_merge.dir
+C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app/out/build/x64-Debug/CMakeFiles/app_decoder.dir
+C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app/out/build/x64-Debug/CMakeFiles/app_encoder.dir
+C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

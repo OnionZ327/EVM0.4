@@ -1,0 +1,73 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "app_bitstream_merge::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-app_bitstream_merge-Debug-9e4d1771e91df7d74ed0.json",
+					"name" : "app_bitstream_merge",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "app_decoder::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-app_decoder-Debug-af5364b7c256231dde7f.json",
+					"name" : "app_decoder",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "app_encoder::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-app_encoder-Debug-c624893709c4ef34f288.json",
+					"name" : "app_encoder",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app/out/build/x64-Debug",
+		"source" : "C:/Users/Zyc/OneDrive - hdu.edu.cn/桌面/EVM-0.4/app"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}
