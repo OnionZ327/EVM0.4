@@ -5712,6 +5712,25 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
             }
         }
 
+#if Non_Contiguous_Airspace
+        if (valid_flag[2] && valid_flag[1] && top_left[1] == top_left[2]) // exclude same CU cases
+        {
+            valid_flag[2] = 0;
+        }
+        if (valid_flag[2] && valid_flag[6] && top_left[6] == top_left[2])
+        {
+            valid_flag[6] = 0;
+        }
+        int valid_flag_a = valid_flag[3];
+        if (valid_flag[3] && valid_flag[0] && top_left[0] == top_left[3])
+        {
+            valid_flag[3] = 0;
+        }
+        if ((valid_flag[4] && valid_flag_a && top_left[4] == top_left[3]) || (valid_flag[4] && valid_flag[1] && top_left[4] == top_left[1]))
+        {
+            valid_flag[4] = 0;
+        }   
+#else
         if (valid_flag[2] && valid_flag[1] && top_left[1] == top_left[2]) // exclude same CU cases
         {
             valid_flag[2] = 0;
@@ -5726,6 +5745,7 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         {
             valid_flag[4] = 0;
         }
+#endif
 
         for (k = 0; k < BAMVP_NUM; k++)
         {

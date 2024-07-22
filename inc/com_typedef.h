@@ -72,11 +72,6 @@ extern "C"
 #define IBC_OPT_SCC                        1 // M8242: IBC optimization for SCC
 #define Non_Contiguous_Airspace            1
 
-#if Non_Contiguous_Airspace
-#define BAMVP_NUM                          8
-#else
-#define BAMVP_NUM                          5
-#endif
 #if DEST
 #define ODEST                              1 // M8043: Optimization Method of Decoder-side Enhanced Secondary Transform
 #define DEST_PH                            1 // M8035: Add picture level control for DEST
