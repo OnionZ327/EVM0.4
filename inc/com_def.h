@@ -423,6 +423,7 @@ typedef int BOOL;
 
 #if Non_Contiguous_Airspace
 #define BAMVP_NUM                           8
+#define AFF_MODEL_CAND                      3 // maximum affine model based candidate
 #if HACD
 #define AFF_MAX_NUM_MRG                     12
 #else
@@ -430,14 +431,13 @@ typedef int BOOL;
 #endif
 #else
 #define BAMVP_NUM                           5
+#define AFF_MODEL_CAND                      2 // maximum affine model based candidate
 #if HACD
 #define AFF_MAX_NUM_MRG                     11
 #else
 #define AFF_MAX_NUM_MRG                     5 // maximum affine merge candidates
 #endif
 #endif
-
-#define AFF_MODEL_CAND                      3 // maximum affine model based candidate
 
 #define MAX_MEMORY_ACCESS_BI                ((8 + 7) * (8 + 7) / 64)
 #define MAX_MEMORY_ACCESS_UNI               ((8 + 7) * (4 + 7) / 32)
