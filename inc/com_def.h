@@ -422,7 +422,7 @@ typedef int BOOL;
 #define Non_Contiguous_Airspace             1
 
 #if Non_Contiguous_Airspace
-#define BAMVP_NUM                           5
+#define BAMVP_NUM                           8
 #define AFF_MODEL_CAND                      2 // maximum affine model based candidate
 #if HACD
 #define AFF_MAX_NUM_MRG                     11
