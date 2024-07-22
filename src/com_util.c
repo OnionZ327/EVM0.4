@@ -5713,10 +5713,6 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         }
 
 #if Non_Contiguous_Airspace
-        if (valid_flag[2] && valid_flag[1] && top_left[1] == top_left[2]) // exclude same CU cases
-        {
-            valid_flag[2] = 0;
-        }
         if (valid_flag[2] && valid_flag[6] && top_left[6] == top_left[2])
         {
             valid_flag[6] = 0;
@@ -5728,6 +5724,10 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         if (valid_flag[7] && valid_flag[4] && top_left[4] == top_left[7])
         {
             valid_flag[7] = 0;
+        }
+        if (valid_flag[2] && valid_flag[1] && top_left[1] == top_left[2]) // exclude same CU cases
+        {
+            valid_flag[2] = 0;
         }
         int valid_flag_a = valid_flag[3];
         if (valid_flag[3] && valid_flag[0] && top_left[0] == top_left[3])
