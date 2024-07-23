@@ -6020,7 +6020,7 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
 #if HACD
     if (cnt < AFF_MAX_NUM_MRG)
     {
-        int neb_addr[BAMVP_NUM];
+        int neb_addr[5];
 
         neb_addr[0] = scup + pic_width_in_scu * (cu_height_in_scu - 1) - 1; // F
         neb_addr[1] = scup - pic_width_in_scu + cu_width_in_scu - 1;        // G
@@ -6028,7 +6028,7 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         neb_addr[3] = scup - 1;                                             // A
         neb_addr[4] = scup - pic_width_in_scu - 1;                          // D
 
-        int his_flag[BAMVP_NUM];
+        int his_flag[5];
 
         his_flag[0] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[0]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[0]]);
         his_flag[1] = y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[1]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[1]]);
@@ -6039,7 +6039,7 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         for (int his_idx = 0; his_idx < info->sqh.num_of_hat_cand; his_idx++)
         {
             if (history_affine_mv[his_idx] == NULL) break;
-            for (k = 0; k < BAMVP_NUM; k++)
+            for (k = 0; k < 5; k++)
             {
                 if (his_flag[k] && map_refi[neb_addr[k]][0] == history_affine_mv[his_idx]->refi[0] && map_refi[neb_addr[k]][1] == history_affine_mv[his_idx]->refi[1])
                 {
