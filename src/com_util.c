@@ -5673,18 +5673,28 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         neb_addr[2] = scup - pic_width_in_scu + cu_width_in_scu;            // C
         neb_addr[3] = scup - 1;                                             // A
         neb_addr[4] = scup - pic_width_in_scu - 1;                          // D
-        neb_addr[5] = scup + pic_width_in_scu * (2 * cu_height_in_scu - 1) - 1 - cu_width_in_scu;//Non_LD
-        neb_addr[6] = scup - pic_width_in_scu * (cu_height_in_scu + 1) + 2 * cu_width_in_scu - 1;//Non_RU
-        neb_addr[7] = scup - pic_width_in_scu * (cu_height_in_scu + 1) - cu_width_in_scu - 1;//Non_LU
+        neb_addr[5] = neb_addr[0] + pic_width_in_scu * cu_height_in_scu - cu_width_in_scu;;//Non_LD
+        neb_addr[6] = neb_addr[1] - pic_width_in_scu * cu_height_in_scu + cu_width_in_scu;//Non_RU
+        neb_addr[7] = neb_addr[4] - pic_width_in_scu * cu_height_in_scu - cu_width_in_scu;//Non_LU
+        /*neb_addr[8] = neb_addr[5] + pic_width_in_scu * cu_height_in_scu - cu_width_in_scu;
+        neb_addr[9] = neb_addr[6] - pic_width_in_scu * cu_height_in_scu + cu_width_in_scu;
+        neb_addr[10] = scup - pic_width_in_scu * (2 * cu_height_in_scu + 1) + cu_width_in_scu / 2;
+        neb_addr[11] = scup + pic_width_in_scu * cu_height_in_scu / 2 - 2 * cu_width_in_scu - 1;
+        neb_addr[12] = neb_addr[7] - pic_width_in_scu * cu_height_in_scu - cu_width_in_scu;*/
 
         valid_flag[0] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[0]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[0]]) && MCU_GET_AFF(map_scu[neb_addr[0]]);
         valid_flag[1] = y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[1]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[1]]) && MCU_GET_AFF(map_scu[neb_addr[1]]);
-        valid_flag[2] = y_scu > 0 && x_scu + cu_width_in_scu < pic_width_in_scu&& MCU_GET_CODED_FLAG(map_scu[neb_addr[2]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[2]]) && MCU_GET_AFF(map_scu[neb_addr[2]]);
+        valid_flag[2] = y_scu > 0 && x_scu + cu_width_in_scu < pic_width_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[2]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[2]]) && MCU_GET_AFF(map_scu[neb_addr[2]]);
         valid_flag[3] = x_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[3]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[3]]) && MCU_GET_AFF(map_scu[neb_addr[3]]);
         valid_flag[4] = x_scu > 0 && y_scu > 0 && MCU_GET_CODED_FLAG(map_scu[neb_addr[4]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[4]]) && MCU_GET_AFF(map_scu[neb_addr[4]]);
-        valid_flag[5] = x_scu > cu_width_in_scu && y_scu < (pic_height_in_scu - cu_height_in_scu) && MCU_GET_CODED_FLAG(map_scu[neb_addr[5]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[5]]) && MCU_GET_AFF(map_scu[neb_addr[5]]);
-        valid_flag[6] = (x_scu + 2 * cu_width_in_scu - 1) < pic_width_in_scu && y_scu > cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[6]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[6]]) && MCU_GET_AFF(map_scu[neb_addr[6]]);
+        valid_flag[5] = x_scu > cu_width_in_scu && y_scu <= (pic_height_in_scu -  2 * cu_height_in_scu) && MCU_GET_CODED_FLAG(map_scu[neb_addr[5]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[5]]) && MCU_GET_AFF(map_scu[neb_addr[5]]);
+        valid_flag[6] = (x_scu + 2 * cu_width_in_scu) <= pic_width_in_scu && y_scu > cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[6]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[6]]) && MCU_GET_AFF(map_scu[neb_addr[6]]);
         valid_flag[7] = x_scu > cu_width_in_scu && y_scu > cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[7]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[7]]) && MCU_GET_AFF(map_scu[neb_addr[7]]);
+        /*valid_flag[8] = x_scu > 2 * cu_width_in_scu && y_scu <= (pic_height_in_scu -  3 * cu_height_in_scu) && MCU_GET_CODED_FLAG(map_scu[neb_addr[8]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[8]]) && MCU_GET_AFF(map_scu[neb_addr[8]]);
+        valid_flag[9] = (x_scu + 3 * cu_width_in_scu) <= pic_width_in_scu && y_scu > 2 * cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[9]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[9]]) && MCU_GET_AFF(map_scu[neb_addr[9]]);
+        valid_flag[10] = y_scu > 2 * cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[10]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[10]]) && MCU_GET_AFF(map_scu[neb_addr[10]]);
+        valid_flag[11] = x_scu > 2 * cu_width_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[11]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[11]]) && MCU_GET_AFF(map_scu[neb_addr[11]]);
+        valid_flag[12] = x_scu > 2 * cu_width_in_scu && y_scu > 2 * cu_height_in_scu && MCU_GET_CODED_FLAG(map_scu[neb_addr[12]]) && !MCU_GET_INTRA_FLAG(map_scu[neb_addr[12]]) && MCU_GET_AFF(map_scu[neb_addr[12]]);*/
 
 #else
         int neb_addr[BAMVP_NUM];
@@ -5713,6 +5723,27 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         }
 
 #if Non_Contiguous_Airspace
+        if (valid_flag[8] && valid_flag[5] && top_left[5] == top_left[8])
+        {
+            valid_flag[8] = 0;
+        }
+        if (valid_flag[9] && valid_flag[6] && top_left[6] == top_left[9])
+        {
+            valid_flag[9] = 0;
+        }
+        if (valid_flag[10] && valid_flag[6] && top_left[6] == top_left[10])
+        {
+            valid_flag[10] = 0;
+        }
+        if (valid_flag[11] && valid_flag[5] && top_left[5] == top_left[11])
+        {
+            valid_flag[11] = 0;
+        }
+        if (valid_flag[12] && valid_flag[7] && top_left[7] == top_left[12])
+        {
+            valid_flag[12] = 0;
+        }
+
         if (valid_flag[2] && valid_flag[6] && top_left[6] == top_left[2])
         {
             valid_flag[6] = 0;
@@ -5725,6 +5756,7 @@ int com_get_affine_merge_candidate(COM_INFO *info, COM_MODE *mod_info_curr, COM_
         {
             valid_flag[7] = 0;
         }
+
         if (valid_flag[2] && valid_flag[1] && top_left[1] == top_left[2]) // exclude same CU cases
         {
             valid_flag[2] = 0;

@@ -419,7 +419,7 @@ typedef int BOOL;
 #define AFFINE_MAX_NUM_RB                   1 ///< max number of motion candidates in right-bottom corner
 #define AFFINE_MIN_BLOCK_SIZE               4 ///< Minimum affine MC block size
 
-#define Non_Contiguous_Airspace             1
+#define Non_Contiguous_Airspace             0
 
 #if Non_Contiguous_Airspace
 #define BAMVP_NUM                           8
